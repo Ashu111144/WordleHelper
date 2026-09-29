@@ -64,10 +64,10 @@ WordleApp.Solver = {
       return;
     }
 
-    When the current row is full (all 5 letters entered), no more letters can be typed
+    // When the current row is full (all 5 letters entered), no more letters can be typed
     if (state.currentCol >= COLS) {
       return;
-    // }
+    }
 
     // Only allow letters that can appear at the current cursor position (state.currentCol)
     // for candidate words in state.liveWords

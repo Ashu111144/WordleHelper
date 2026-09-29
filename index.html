@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive Wordle Solver and Helper using real-time constraint elimination and p5.js graphics.">
+    <title>Wordle Solver</title>
+
+    <!-- Vendor Libraries -->
+    <script src="scripts/vendor/p5.min.js"></script>
+
+    <!-- Application Stylesheets -->
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <!-- Main Application Container -->
+    <main id="app">
+        <!-- Interactive p5.js Canvas Container -->
+        <div id="game" aria-label="Interactive Wordle Game Board"></div>
+
+        <!-- Filtered Candidate Recommendations Section -->
+        <section id="candidate-section" aria-labelledby="candidate-heading">
+            <header class="candidate-header">
+                <h1 id="candidate-heading">Possible words</h1>
+                <span id="candidate-count" aria-live="polite"></span>
+            </header>
+            <div id="candidate-list" role="list" aria-label="Possible answer words"></div>
+        </section>
+    </main>
+
+    <!-- Data Layer -->
+    <script src="scripts/data/wordList.js"></script>
+
+    <!-- Application Modules -->
+    <script src="scripts/constants/constants.js"></script>
+    <script src="scripts/state/gameState.js"></script>
+    <script src="scripts/engine/solver.js"></script>
+    <script src="scripts/ui/layout.js"></script>
+    <script src="scripts/ui/domManager.js"></script>
+    <script src="scripts/ui/renderer.js"></script>
+    <script src="scripts/input/inputHandler.js"></script>
+
+    <!-- Bootstrap & p5 Lifecycle Hooks -->
+    <script src="scripts/main.js"></script>
+</body>
+</html>

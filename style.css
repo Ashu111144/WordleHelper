@@ -1,0 +1,5 @@
+/**
+ * Wordle Solver - Root Stylesheet
+ * Forwards to the modular styles/style.css stylesheet for backward compatibility.
+ */
+@import url("styles/style.css");

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WordleHelper - Intelligent real-time Wordle solver with automatic constraint filtering, continuous typing, and instant candidate recommendations.">
+    <title>WordleHelper</title>
+<!-- Web Page Wordlehelpericon -->
+ <link rel="icon" type="image/png" href="favicon.png">
+
+    <!-- Web Page Favicon -->
+    <!-- <link rel="icon" type="image/svg+xml" href="favicon.svg"> -->
+
+    <!-- Vendor Libraries -->
+    <script src="scripts/vendor/p5.min.js"></script>
+
+    <!-- Application Stylesheets -->
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <!-- Main Application Container -->
+    <main id="app">
+        <!-- Top Navigation App Bar -->
+        <header id="app-bar" class="app-bar" role="banner">
+            <div class="app-bar-left">
+                <button id="app-title-btn" class="app-title-btn" type="button" title="Click to reset everything" aria-label="WordleHelper - Click to reset everything">
+                    <!-- favicon png -->
+                     <img class="app-logo-icon" src="favicon.png" width="22" height="22" alt="WordleHelper Logo"/>
+                    <!-- <svg class="app-logo-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> -->
+                        <!-- <rect x="3" y="3" width="18" height="18" rx="4" fill="var(--color-correct)" stroke="none"/> -->
+                        <!-- <text x="12" y="16.5" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="900" fill="#ffffff" text-anchor="middle">W</text> -->
+                    <!-- </svg> -->
+                    <span class="app-title-text">WordleHelper</span>
+                    <!-- <span class="reset-tooltip-chip" aria-hidden="true">↺ Reset</span> -->
+                </button>
+            </div>
+
+            <div class="app-bar-right">
+                <!-- Dark Mode / Theme Toggle Button -->
+                <button id="theme-toggle-btn" class="app-bar-btn" type="button" aria-label="Toggle theme" title="Cycle theme: System / Dark / Light">
+                    <span id="theme-icon" class="theme-icon" aria-hidden="true">💻</span>
+                    <span id="theme-label" class="theme-label">System</span>
+                </button>
+
+                <!-- Live Candidates Quick Scroll Badge -->
+                <button id="header-candidate-badge" class="header-candidate-badge" type="button" title="Jump to candidate words" aria-label="Jump to candidate words">
+                    <span id="header-word-count">2309</span> words
+                </button>
+            </div>
+        </header>
+
+        <!-- Interactive p5.js Canvas Container -->
+        <div id="game" aria-label="Interactive Wordle Game Board"></div>
+
+        <!-- Filtered Candidate Recommendations Section -->
+        <section id="candidate-section" aria-labelledby="candidate-heading">
+            <header class="candidate-header">
+                <h1 id="candidate-heading">Possible words</h1>
+                <span id="candidate-count" aria-live="polite"></span>
+            </header>
+            <div id="candidate-list" role="list" aria-label="Possible answer words"></div>
+        </section>
+    </main>
+
+    <!-- Data Layer -->
+    <script src="scripts/data/wordList.js"></script>
+
+    <!-- Application Modules -->
+    <script src="scripts/constants/constants.js"></script>
+    <script src="scripts/state/gameState.js"></script>
+    <script src="scripts/engine/solver.js"></script>
+    <script src="scripts/ui/layout.js"></script>
+    <script src="scripts/ui/themeManager.js"></script>
+    <script src="scripts/ui/domManager.js"></script>
+    <script src="scripts/ui/renderer.js"></script>
+    <script src="scripts/input/inputHandler.js"></script>
+
+    <!-- Bootstrap & p5 Lifecycle Hooks -->
+    <script src="scripts/main.js"></script>
+</body>
+</html>

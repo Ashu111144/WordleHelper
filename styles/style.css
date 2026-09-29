@@ -1,0 +1,379 @@
+/**
+ * ============================================================================
+ * WordleHelper - Main Stylesheet
+ * ============================================================================
+ * Fluid, modern styling with full light and dark mode tokens,
+ * glassmorphic app bar, interactive reset, and responsive candidate grid.
+ */
+
+/* -------------------------------------------------------------------------- */
+/* 1. Design Tokens & CSS Custom Properties                                   */
+/* -------------------------------------------------------------------------- */
+:root {
+  --app-bar-height: 50px;
+  --max-app-width: 800px;
+  --tile-border-radius: 4px;
+
+  /* Typography */
+  --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-size-title: 19px;
+  --font-size-heading: 18px;
+  --font-size-meta: 13px;
+  --font-size-tile: 14px;
+}
+
+/* Light Theme Variables */
+:root[data-theme="light"] {
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f6f7f8;
+  --color-bg-hover: #e9ecef;
+  --color-text-primary: #1a1a1b;
+  --color-text-secondary: #6c757d;
+  --color-border-subtle: #d3d6da;
+  --color-border-hover: #878a8c;
+  --color-app-bar-bg: rgba(255, 255, 255, 0.95);
+  --color-btn-bg: #f3f4f6;
+  --color-btn-hover: #e5e7eb;
+  --color-btn-border: #d1d5db;
+  --color-btn-text: #1f2937;
+  --color-correct: #6aaa64;
+  --color-present: #c9b458;
+  --color-absent: #787c7e;
+  --color-badge-bg: #e8f5e9;
+  --color-badge-text: #2e7d32;
+  --color-badge-border: #c8e6c9;
+}
+
+/* Dark Theme Variables (Default) */
+:root[data-theme="dark"],
+:root {
+  --color-bg-primary: #121213;
+  --color-bg-secondary: #1a1a1b;
+  --color-bg-hover: #272729;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #a9a9ab;
+  --color-border-subtle: #3a3a3c;
+  --color-border-hover: #818384;
+  --color-app-bar-bg: rgba(18, 18, 19, 0.95);
+  --color-btn-bg: #272729;
+  --color-btn-hover: #3a3a3c;
+  --color-btn-border: #3a3a3c;
+  --color-btn-text: #ffffff;
+  --color-correct: #538d4e;
+  --color-present: #b59f3b;
+  --color-absent: #3a3a3c;
+  --color-badge-bg: #1c3320;
+  --color-badge-text: #81c784;
+  --color-badge-border: #2e5934;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 2. Global Document & Reset                                                 */
+/* -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 3. Main Application Container & App Bar                                    */
+/* -------------------------------------------------------------------------- */
+#app {
+  width: min(100%, var(--max-app-width));
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top App Bar */
+.app-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--app-bar-height);
+  padding: 0 16px;
+  background-color: var(--color-app-bar-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-border-subtle);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.app-bar-left,
+.app-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* App Title Button (Clicking resets everything) */
+.app-title-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  padding: 6px 8px;
+  margin: 0;
+  color: var(--color-text-primary);
+  font-family: inherit;
+  cursor: pointer;
+  border-radius: 6px;
+  user-select: none;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.app-title-btn:hover {
+  background-color: var(--color-bg-hover);
+}
+
+.app-title-btn:active {
+  transform: scale(0.97);
+}
+
+.app-logo-icon {
+  flex-shrink: 0;
+}
+
+.app-title-text {
+  font-size: var(--font-size-title);
+  font-weight: 800;
+  letter-spacing: -0.4px;
+}
+
+.reset-tooltip-chip {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 12px;
+  background-color: var(--color-btn-bg);
+  border: 1px solid var(--color-btn-border);
+  color: var(--color-text-secondary);
+  opacity: 0.85;
+  transition: opacity 0.15s ease, background-color 0.15s ease;
+}
+
+.app-title-btn:hover .reset-tooltip-chip {
+  opacity: 1;
+  color: var(--color-text-primary);
+  border-color: var(--color-border-hover);
+}
+
+/* App Bar Action Buttons */
+.app-bar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-btn-text);
+  background-color: var(--color-btn-bg);
+  border: 1px solid var(--color-btn-border);
+  border-radius: 20px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+
+.app-bar-btn:hover {
+  background-color: var(--color-btn-hover);
+  border-color: var(--color-border-hover);
+}
+
+.app-bar-btn:active {
+  transform: scale(0.96);
+}
+
+.theme-icon {
+  font-size: 13px;
+  line-height: 1;
+}
+
+/* Header Candidate Words Count Badge */
+.header-candidate-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-badge-text);
+  background-color: var(--color-badge-bg);
+  border: 1px solid var(--color-badge-border);
+  border-radius: 20px;
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.15s ease, transform 0.1s ease;
+}
+
+.header-candidate-badge:hover {
+  opacity: 0.9;
+}
+
+.header-candidate-badge:active {
+  transform: scale(0.96);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 4. Canvas Container                                                        */
+/* -------------------------------------------------------------------------- */
+#game {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+canvas {
+  display: block;
+  width: 100% !important;
+  max-width: var(--max-app-width) !important;
+  height: calc(100dvh - var(--app-bar-height)) !important;
+  touch-action: pan-y;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 5. Candidate Words Section                                                 */
+/* -------------------------------------------------------------------------- */
+#candidate-section {
+  padding: 24px 20px 48px;
+  border-top: 1px solid var(--color-border-subtle);
+  background-color: var(--color-bg-primary);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.candidate-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 auto 16px;
+  cursor: pointer;
+}
+
+.candidate-header h1 {
+  margin: 0;
+  font-size: var(--font-size-heading);
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+#candidate-count {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-meta);
+  font-weight: 600;
+}
+
+/* Responsive Grid for Candidate Words */
+#candidate-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+  gap: 8px;
+  max-height: 55vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 4px;
+}
+
+/* Candidate Word Tile Button */
+.candidate-word {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 9px 4px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--tile-border-radius);
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-tile);
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-align: center;
+  user-select: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+
+.candidate-word:hover {
+  border-color: var(--color-border-hover);
+  background-color: var(--color-bg-hover);
+  transform: translateY(-1px);
+}
+
+.candidate-word:active {
+  transform: translateY(0);
+}
+
+.candidate-more-note {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 12px;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 6. Responsive Media Queries                                                */
+/* -------------------------------------------------------------------------- */
+@media (max-width: 520px) {
+  .app-bar {
+    padding: 0 10px;
+  }
+
+  .app-title-text {
+    font-size: 17px;
+  }
+
+  .reset-tooltip-chip {
+    display: none;
+  }
+
+  .theme-label {
+    display: none;
+  }
+
+  .app-bar-btn {
+    padding: 6px 9px;
+  }
+
+  .header-candidate-badge {
+    padding: 6px 9px;
+    font-size: 11px;
+  }
+
+  #candidate-section {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  #candidate-list {
+    grid-template-columns: repeat(auto-fill, minmax(68px, 1fr));
+    gap: 6px;
+  }
+}

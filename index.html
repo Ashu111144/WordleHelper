@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WordleHelper - Intelligent real-time Wordle solver with automatic constraint filtering, continuous typing, and instant candidate recommendations.">
+    <title>WordleHelper</title>
+
+    <!-- Web Page Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <!-- p5.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/p5@2.3.3/lib/p5.min.js"></script>
+
+    <!-- Application Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Main Application Container -->
+    <main id="app">
+        <!-- Top Navigation App Bar -->
+        <header id="app-bar" class="app-bar" role="banner">
+            <div class="app-bar-left">
+                <button id="app-title-btn" class="app-title-btn" type="button" title="Click to reset everything" aria-label="WordleHelper - Click to reset everything">
+                    <img class="app-logo-icon" src="favicon.png" width="22" height="22" alt="WordleHelper Logo"/>
+                    <span class="app-title-text">WordleHelper</span>
+                </button>
+            </div>
+
+            <div class="app-bar-right">
+                <!-- Dark Mode / Theme Toggle Button -->
+                <button id="theme-toggle-btn" class="app-bar-btn" type="button" aria-label="Toggle theme" title="Cycle theme: System / Dark / Light">
+                    <span id="theme-icon" class="theme-icon" aria-hidden="true">💻</span>
+                    <span id="theme-label" class="theme-label">System</span>
+                </button>
+
+                <!-- Live Candidates Quick Navigation Badge -->
+                <button id="header-candidate-badge" class="header-candidate-badge" type="button" title="View remaining words list" aria-label="View remaining words list">
+                    <span id="header-word-count">2309</span> words
+                    <svg class="badge-arrow-icon" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Interactive p5.js Canvas Container -->
+        <div id="game" aria-label="Interactive Wordle Game Board"></div>
+
+        <!-- Dedicated Full-Screen Candidate Words List Page -->
+        <section id="list-page" class="list-page-view" aria-label="Remaining Candidate Words" hidden>
+            <!-- List Page Top Navigation Bar -->
+            <header class="list-page-bar" role="toolbar" aria-label="Word list toolbar">
+                <!-- Top Left: Back Button -->
+                <div class="list-bar-left">
+                    <button id="list-back-btn" class="list-bar-btn back-btn" type="button" aria-label="Back to solver board" title="Back to solver board">
+                        <svg class="back-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                        <span class="back-btn-text">Back</span>
+                    </button>
+                </div>
+
+                <!-- Top Center: Remaining Words Count -->
+                <div class="list-bar-center">
+                    <div id="list-count-badge" class="list-count-badge" aria-live="polite">
+                        <span id="list-word-count">2,309</span>
+                        <span id="list-count-label">words</span>
+                    </div>
+                </div>
+
+                <!-- Top Right: 2 Sort Order Cycle Button -->
+                <div class="list-bar-right">
+                    <button id="sort-order-cycle-btn" class="list-bar-btn sort-cycle-btn" type="button" aria-label="Cycle sort order" title="Click to cycle sort order">
+                        <svg class="sort-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4"/>
+                        </svg>
+                        <span id="sort-order-btn-label" class="sort-label">High Letter Freq</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Active Sort Order Descriptor Banner -->
+            <div class="list-sort-banner" role="status">
+                <span class="sort-banner-icon" id="sort-banner-icon" aria-hidden="true">🔤</span>
+                <span class="sort-banner-text" id="sort-banner-text">Order: 'word with high letters frequency'</span>
+            </div>
+
+            <!-- Scrollable Candidate Word Tiles Area -->
+            <div id="list-scroll-container" class="list-scroll-container">
+                <div id="candidate-list" class="candidate-grid" role="list" aria-label="Possible answer words"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Application Script -->
+    <script src="script.js"></script>
+</body>
+</html>
